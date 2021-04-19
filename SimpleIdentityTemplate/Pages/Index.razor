@@ -1,0 +1,22 @@
+﻿@page "/"
+@inject Graz.SimpleIdentity.SAPAuth AuthData
+
+<h1>Hello, @FirstName @LastName (@UserName)!</h1>
+
+Welcome to your new app.
+
+@code
+{
+    private string FirstName = "Anonymous User";
+    private string LastName = "Anonymous User";
+    private string UserName = "Anonymous";
+
+    protected override async Task OnInitializedAsync()
+    {
+        UserName = AuthData.UserId;
+        FirstName = AuthData.FirstName;
+        LastName = AuthData.LastName;
+
+        await base.OnInitializedAsync();
+    }
+}

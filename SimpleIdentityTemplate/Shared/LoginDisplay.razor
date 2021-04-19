@@ -1,0 +1,26 @@
+﻿@using Microsoft.Extensions.Options
+@inject AuthenticationStateProvider AuthState
+@inject Graz.SimpleIdentity.SAPAuth AuthData
+
+<AuthorizeView>
+    <Authorized>
+        <text>(@UserName)</text>
+        <a href="/Logout">Log out</a>
+    </Authorized>
+    <NotAuthorized>
+        <a href="/Login">Log in</a>
+    </NotAuthorized>
+</AuthorizeView>
+
+
+@code
+{
+    private string UserName = "Anonymous";
+
+    protected override async Task OnInitializedAsync()
+    {
+        UserName = AuthData.UserId;
+
+        await base.OnInitializedAsync();
+    }
+}

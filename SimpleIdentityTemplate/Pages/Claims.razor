@@ -1,0 +1,34 @@
+﻿@page "/claims"
+@inject Graz.SimpleIdentity.SAPAuth AuthData
+
+<AuthorizeView>
+    <Authorized>
+        <h2>
+            Hello @FirstName @LastName,
+            here's the list of your claims:
+        </h2>
+        <ul>
+            @foreach (var claim in context.User.Claims)
+            {
+                <li><b>@claim.Type</b>: @claim.Value</li>
+            }
+        </ul>
+    </Authorized>
+    <NotAuthorized>
+        <p>I'm sorry, I can't display anything until you log in</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code
+{
+    private string FirstName = "Anonymous";
+    private string LastName = "User";
+
+    protected override async Task OnInitializedAsync()
+    {
+        FirstName = AuthData.FirstName;
+        LastName = AuthData.LastName;
+
+        await base.OnInitializedAsync();
+    }
+}
